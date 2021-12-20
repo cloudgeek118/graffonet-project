@@ -77,7 +77,7 @@ dashboard.new(
     iconColor = '#B877D9',
     type = 'tags'
   )
-.addRow(
+).addRow(
     row.new(
        title="all-market"
     ).addPanels(
