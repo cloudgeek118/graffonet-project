@@ -28,10 +28,10 @@ local addMarket(market, pm) = graphPanel.new(
     legend_hideZero=true,
 ).addTarget(
     elasticsearch.target(
-      query = 'message.MerchantAccount:"'+ market.name + '" AND message.PAYMETHOD:"' + pm + '" AND message.Source:ADYEN AND message.AdyenEventCode:"CANCEL_OR_REFUND" AND message.MerchantRef:("Reason*" OR "Refund/cancel missing order") AND NOT message.Metadata_ishypeorder:* AND NOT message.ShopperInteraction:"POS"',
+      query = 'message.MerchantAccount:"' + market.name + '" AND message.PAYMETHOD:"' + pm + '" AND message.Source:ADYEN AND message.AdyenEventCode:"CANCEL_OR_REFUND" AND message.MerchantRef:("Reason*" OR "Refund/cancel missing order") AND NOT message.Metadata_ishypeorder:* AND NOT message.ShopperInteraction:"POS"',
+      timeField = '@timestamp',
       metrics = [{ field: 'message.PSPReference.keyword', id: '1', meta: {}, settings: {}, type: 'cardinality' }],
-      bucketAggs=[{ field: 'timestamp', id: '2', settings: { interval: '10m', min_doc_count: 0, trimEdges: 0 }, type: 'date_histogram' }],
-      alias=' + pm + '
+      bucketAggs=[{ field: '@timestamp', id: '2', settings: { interval: '10m', min_doc_count: 0, trimEdges: 0 }, type: 'date_histogram' }],
     )
 ).addAlert(
    name = 'Test-reversal dashboard',
