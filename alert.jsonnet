@@ -7,8 +7,8 @@ local row = grafana.row;
 local annotation = grafana.annotation;
 local alertlistPanel = grafana.alertlist;
 local link = grafana.link;
-local countries = import 'countries.jsonnet';
-
+local countries = import 'vars/countries.jsonnet';
+local global = import 'vars/global.jsonnet';
 local pspLogsDatasource = 'Holmes prd sre-payments';
 
 local addMarket(market, pm) = graphPanel.new(
@@ -39,12 +39,8 @@ local addMarket(market, pm) = graphPanel.new(
    frequency = '10m',
    forDuration = '10m',
    handler = 1,
-   message = 'Priority: P2'
-   Market: ' + market.name + '
-   info: This is test alert'
-   ,
    alertRuleTags={
-     "Team": "Payments_SRE"
+     "Team": "Payments_SRE",
      "metric": "reversal" 
    },
    notifications = [
